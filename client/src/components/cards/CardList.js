@@ -5,7 +5,7 @@ import { fetchCards } from "../../actions";
 
 class CardList extends React.Component {
     componentDidMount() {
-        this.props.fetchCards();
+        // this.props.fetchCards();
     }
 
     renderCards() {
