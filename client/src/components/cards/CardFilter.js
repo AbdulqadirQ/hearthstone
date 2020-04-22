@@ -1,11 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
 import { selectedClass } from "../../actions";
+import { classIds } from "./classTypes";
 import filterStyling from "./CardFilter.css";
 
 class CardFilter extends React.Component {
     updateSelectedClasses(classUpdate) {
         this.props.selectedClass(classUpdate);
+    }
+
+    renderClassCheckboxes() {
+        const checkboxes = [];
+        for (const class_name in classIds) {
+            checkboxes.push(
+                <div key={classIds[class_name]} className="row">
+                    <div className="ui toggle checkbox filterStyling">
+                        <input
+                            type="checkbox"
+                            name={class_name}
+                            onChange={(e) => this.updateSelectedClasses({ [class_name]: e.target.checked })}
+                        />
+                        <label>{class_name}</label>
+                    </div>
+                </div>
+            );
+        }
+        return checkboxes;
     }
 
     render() {
@@ -15,27 +35,7 @@ class CardFilter extends React.Component {
                     <div className="ui form">
                         <div className="inline field">
                             <h3 className="header">Class</h3>
-                            <div className="row">
-                                <div className="ui toggle checkbox filterStyling">
-                                    <input
-                                        type="checkbox"
-                                        name="mage"
-                                        onChange={(e) => this.updateSelectedClasses({ mage: e.target.checked })}
-                                    />
-                                    <label>Mage</label>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="ui toggle checkbox filterStyling">
-                                    <input
-                                        type="checkbox"
-                                        name="druid"
-                                        onChange={(e) => this.updateSelectedClasses({ druid: e.target.checked })}
-                                    />
-                                    <label>Druid</label>
-                                </div>
-                            </div>
+                            {this.renderClassCheckboxes()}
                         </div>
                     </div>
                 </div>
