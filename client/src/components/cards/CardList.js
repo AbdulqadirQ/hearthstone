@@ -1,31 +1,30 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards } from "../../actions";
+import { fetchCards, searchTerm } from "../../actions";
 
 class CardList extends React.Component {
-    componentDidMount() {
-        // this.props.fetchCards();
-    }
-
-    renderCards() {
-        console.log("CARDS: ", this.props.cards);
-        if (_.isEmpty(this.props.cards)) {
+    renderSearchedCards(term) {
+        if (_.isEmpty(this.props.cards) || !term || term.term.length < 3) {
             return null;
         }
-        const card_list = this.props.cards.map((card) => (
+        const filtered_list = this.props.cards.filter((card) =>
+            card.name.en_US.toLowerCase().includes(term.term.toLowerCase())
+        );
+
+        const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
         ));
         return card_list;
     }
 
     render() {
-        return <div className="ui small images">{this.renderCards()}</div>;
+        return <div className="ui small images">{this.renderSearchedCards(this.props.term)}</div>;
     }
 }
 
 const mapStateToProps = (state) => {
-    return { cards: state.cards };
+    return { cards: state.cards, term: state.term };
 };
 
-export default connect(mapStateToProps, { fetchCards })(CardList);
+export default connect(mapStateToProps, { fetchCards, searchTerm })(CardList);
