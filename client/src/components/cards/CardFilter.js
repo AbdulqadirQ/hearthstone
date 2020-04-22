@@ -38,8 +38,4 @@ class CardFilter extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return state;
-// };
-
 export default connect(null, { selectedClass })(CardFilter);
