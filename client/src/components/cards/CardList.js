@@ -5,11 +5,11 @@ import { fetchCards, searchTerm } from "../../actions";
 
 class CardList extends React.Component {
     renderSearchedCards(term) {
-        if (_.isEmpty(this.props.cards) || !term || term.term.length < 3) {
+        if (_.isEmpty(this.props.cards) || !term || term.length < 3) {
             return null;
         }
         const filtered_list = this.props.cards.filter((card) =>
-            card.name.en_US.toLowerCase().includes(term.term.toLowerCase())
+            card.name.en_US.toLowerCase().includes(term.toLowerCase())
         );
 
         const card_list = filtered_list.map((card) => (

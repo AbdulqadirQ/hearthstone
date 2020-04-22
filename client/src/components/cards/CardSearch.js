@@ -15,7 +15,7 @@ class CardSearch extends React.Component {
                     <input
                         type="text"
                         placeholder="Search..."
-                        onChange={(e) => this.props.searchTerm({ term: e.target.value })}
+                        onChange={(e) => this.props.searchTerm(e.target.value)}
                     />
                 </div>
             </div>
