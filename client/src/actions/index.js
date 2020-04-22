@@ -1,5 +1,5 @@
 import { endpoint, getAuthToken } from "../api/blizzard";
-import { FETCH_CARDS, SEARCH_TERM } from "./types";
+import { FETCH_CARDS, SEARCH_TERM, SELECTED_CLASS } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
     const token = await getAuthToken();
@@ -23,5 +23,12 @@ export const searchTerm = (term) => {
     return {
         type: SEARCH_TERM,
         payload: term,
+    };
+};
+
+export const selectedClass = (classes) => {
+    return {
+        type: SELECTED_CLASS,
+        payload: classes,
     };
 };

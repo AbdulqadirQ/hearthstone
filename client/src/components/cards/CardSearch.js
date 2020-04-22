@@ -1,7 +1,10 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
+
+import CardFilter from "./CardFilter";
 import { fetchCards, searchTerm } from "../../actions";
+import searchStyle from "./CardSearch.css";
 
 class CardSearch extends React.Component {
     componentDidMount() {
@@ -10,14 +13,19 @@ class CardSearch extends React.Component {
 
     render() {
         return (
-            <div className="ui inverted segment">
-                <div className="ui inverted massive icon input">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        onChange={(e) => this.props.searchTerm(e.target.value)}
-                    />
+            <div className="ui grid container">
+                <div className="sixteen wide column">
+                    <div className="ui category search ">
+                        <div className="ui icon input search-bar">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) => this.props.searchTerm(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </div>
+                <CardFilter />
             </div>
         );
     }
