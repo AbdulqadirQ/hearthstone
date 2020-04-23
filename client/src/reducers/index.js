@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import cardReducer from "./cardReducer";
+import { cardsReducer, metadataReducer } from "./dataReducer";
 import searchReducer from "./searchReducer";
-import { classReducer, rarityReducer, countReducer } from "./filterReducer";
+import { classReducer, rarityReducer, countReducer, gamemodeReducer } from "./filterReducer";
 
 export default combineReducers({
-    cards: cardReducer,
+    cards: cardsReducer,
+    metadata: metadataReducer,
     term: searchReducer,
     classes: classReducer,
     rarities: rarityReducer,
+    gamemode: gamemodeReducer,
     count: countReducer,
 });

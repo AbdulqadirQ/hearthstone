@@ -1,4 +1,4 @@
-import { SELECTED_CLASS, SELECTED_RARITY, COUNT_CARDS } from "../actions/types";
+import { SELECTED_CLASS, SELECTED_RARITY, SELECTED_GAMEMODE, COUNT_CARDS } from "../actions/types";
 
 export const classReducer = (state = {}, action) => {
     switch (action.type) {
@@ -13,6 +13,15 @@ export const rarityReducer = (state = {}, action) => {
     switch (action.type) {
         case SELECTED_RARITY:
             return { ...state, ...action.payload };
+        default:
+            return state;
+    }
+};
+
+export const gamemodeReducer = (state = "standard", action) => {
+    switch (action.type) {
+        case SELECTED_GAMEMODE:
+            return action.payload;
         default:
             return state;
     }
