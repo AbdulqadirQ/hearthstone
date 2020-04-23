@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import CardFilter from "./CardFilter";
 import { searchTerm } from "../../actions";
 import searchStyle from "./CardSearch.css";
 
@@ -20,7 +19,6 @@ class CardSearch extends React.Component {
                         </div>
                     </div>
                 </div>
-                <CardFilter />
             </div>
         );
     }
