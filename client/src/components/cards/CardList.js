@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, searchTerm, selectedClass, selectedRarity } from "../../actions";
+import { fetchCards, searchTerm, selectedClass, selectedRarity, countCards } from "../../actions";
 import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
@@ -53,12 +53,14 @@ class CardList extends React.Component {
         const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
         ));
+        this.props.countCards(card_list.length);
         return card_list;
     }
 
     render() {
         return (
             <div>
+                results: {this.props.count}
                 <div className="ui small images">{this.renderSearchedCards(this.props.term)}</div>
             </div>
         );
@@ -66,7 +68,15 @@ class CardList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { cards: state.cards, term: state.term, classes: state.classes, rarities: state.rarities };
+    return {
+        cards: state.cards,
+        term: state.term,
+        classes: state.classes,
+        rarities: state.rarities,
+        count: state.count,
+    };
 };
 
-export default connect(mapStateToProps, { fetchCards, searchTerm, selectedClass, selectedRarity })(CardList);
+export default connect(mapStateToProps, { fetchCards, searchTerm, selectedClass, selectedRarity, countCards })(
+    CardList
+);

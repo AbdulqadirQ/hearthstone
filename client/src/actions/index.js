@@ -1,5 +1,5 @@
 import { endpoint, getAuthToken } from "../api/blizzard";
-import { FETCH_CARDS, SEARCH_TERM, SELECTED_CLASS, SELECTED_RARITY } from "./types";
+import { FETCH_CARDS, SEARCH_TERM, SELECTED_CLASS, SELECTED_RARITY, COUNT_CARDS } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
     const token = await getAuthToken();
@@ -37,5 +37,12 @@ export const selectedRarity = (rarities) => {
     return {
         type: SELECTED_RARITY,
         payload: rarities,
+    };
+};
+
+export const countCards = (count) => {
+    return {
+        type: COUNT_CARDS,
+        payload: count,
     };
 };
