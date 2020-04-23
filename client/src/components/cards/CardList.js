@@ -34,7 +34,11 @@ class CardList extends React.Component {
     }
 
     renderSearchedCards(term) {
-        if (_.isEmpty(this.props.cards) || !term || term.length < 3) {
+        if (
+            (_.isEmpty(this.props.cards) || !term || term.length < 3) &&
+            !_.some(this.props.classes) &&
+            !_.some(this.props.rarities)
+        ) {
             return null;
         }
         const class_list = this.buildClassFilterList(this.props.classes);
@@ -53,7 +57,11 @@ class CardList extends React.Component {
     }
 
     render() {
-        return <div className="ui small images">{this.renderSearchedCards(this.props.term)}</div>;
+        return (
+            <div>
+                <div className="ui small images">{this.renderSearchedCards(this.props.term)}</div>
+            </div>
+        );
     }
 }
 
