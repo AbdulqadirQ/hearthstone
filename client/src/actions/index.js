@@ -1,5 +1,5 @@
 import { endpoint, getAuthToken } from "../api/blizzard";
-import { FETCH_CARDS, SEARCH_TERM, SELECTED_CLASS, SELECTED_RARITY, COUNT_CARDS } from "./types";
+import { FETCH_CARDS, FETCH_METADATA, SEARCH_TERM, SELECTED_CLASS, SELECTED_RARITY, COUNT_CARDS } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
     const token = await getAuthToken();
@@ -12,11 +12,19 @@ export const fetchCards = () => async (dispatch) => {
                 pageSize: 500,
             },
         });
-        console.log(response);
         cardList = [...cardList, ...response.data.cards];
     }
-
+    console.log("CUMULATIVE CARDS", cardList);
     dispatch({ type: FETCH_CARDS, payload: cardList });
+};
+
+export const fetchMetaData = () => async (dispatch) => {
+    const token = await getAuthToken();
+    const response = await endpoint.get("/metadata", {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("METADATA: ", response.data);
+    dispatch({ type: FETCH_METADATA, payload: response.data });
 };
 
 export const searchTerm = (term) => {
