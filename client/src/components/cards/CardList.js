@@ -39,6 +39,7 @@ class CardList extends React.Component {
             !_.some(this.props.classes) &&
             !_.some(this.props.rarities)
         ) {
+            this.props.countCards(0);
             return null;
         }
         const class_list = this.buildClassFilterList(this.props.classes);
