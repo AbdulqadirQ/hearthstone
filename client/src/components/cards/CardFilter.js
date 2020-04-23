@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectedClass } from "../../actions";
+import { selectedClass, selectedRarity } from "../../actions";
 import { classIds } from "./classTypes";
+import { rarities } from "./rarityTypes";
 import filterStyling from "./CardFilter.css";
 
 class CardFilter extends React.Component {
     updateSelectedClasses(classUpdate) {
         this.props.selectedClass(classUpdate);
+    }
+    updateSelectedRarities(rarityUpdate) {
+        this.props.selectedRarity(rarityUpdate);
     }
 
     renderClassCheckboxes() {
@@ -28,9 +32,28 @@ class CardFilter extends React.Component {
         return checkboxes;
     }
 
+    renderRarityCheckboxes() {
+        const checkboxes = [];
+        for (const rarity in rarities) {
+            checkboxes.push(
+                <div key={rarities[rarity]} className="row">
+                    <div className="ui toggle checkbox filterStyling">
+                        <input
+                            type="checkbox"
+                            name={rarity}
+                            onChange={(e) => this.updateSelectedRarities({ [rarity]: e.target.checked })}
+                        />
+                        <label>{rarity}</label>
+                    </div>
+                </div>
+            );
+        }
+        return checkboxes;
+    }
+
     render() {
         return (
-            <div>
+            <div className="ui grid container">
                 <div className="four wide column">
                     <div className="ui form">
                         <div className="inline field">
@@ -39,9 +62,17 @@ class CardFilter extends React.Component {
                         </div>
                     </div>
                 </div>
+                <div className="four wide column">
+                    <div className="ui form">
+                        <div className="inline field">
+                            <h3 className="header">Rarity</h3>
+                            {this.renderRarityCheckboxes()}
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
-export default connect(null, { selectedClass })(CardFilter);
+export default connect(null, { selectedClass, selectedRarity })(CardFilter);
