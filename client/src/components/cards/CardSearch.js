@@ -2,14 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import CardFilter from "./CardFilter";
-import { fetchCards, searchTerm } from "../../actions";
+import { searchTerm } from "../../actions";
 import searchStyle from "./CardSearch.css";
 
 class CardSearch extends React.Component {
-    componentDidMount() {
-        this.props.fetchCards();
-    }
-
     render() {
         return (
             <div className="ui grid container">
@@ -34,4 +30,4 @@ const mapStateToProps = (state) => {
     return { cards: state.cards, term: state.term };
 };
 
-export default connect(mapStateToProps, { fetchCards, searchTerm })(CardSearch);
+export default connect(mapStateToProps, { searchTerm })(CardSearch);
