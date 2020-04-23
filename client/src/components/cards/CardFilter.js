@@ -6,6 +6,7 @@ import { rarities } from "./rarityTypes";
 import filterStyling from "./CardFilter.css";
 
 class CardFilter extends React.Component {
+    state = { gamemode_standard: true };
     updateSelectedClasses(classUpdate) {
         this.props.selectedClass(classUpdate);
     }
@@ -51,6 +52,35 @@ class CardFilter extends React.Component {
         return checkboxes;
     }
 
+    onGamemodeChange(gamemode) {
+        if (gamemode === "standard") {
+            this.setState({ gamemode_standard: true });
+        } else {
+            this.setState({ gamemode_standard: false });
+        }
+    }
+
+    renderGameModeCheckbox() {
+        return (
+            <div className="row">
+                <div className="ui buttons">
+                    <button
+                        className={this.state.gamemode_standard ? "ui button positive" : "ui button"}
+                        onClick={() => this.onGamemodeChange("standard")}
+                    >
+                        Standard
+                    </button>
+                    <button
+                        className={this.state.gamemode_standard ? "ui button" : "ui button positive"}
+                        onClick={() => this.onGamemodeChange("wild")}
+                    >
+                        Wild
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div className="ui grid container">
@@ -68,6 +98,11 @@ class CardFilter extends React.Component {
                             <h3 className="header">Rarity</h3>
                             {this.renderRarityCheckboxes()}
                         </div>
+                    </div>
+                </div>
+                <div className="four wide column">
+                    <div className="ui form">
+                        <div className="inline field">{this.renderGameModeCheckbox()}</div>
                     </div>
                 </div>
             </div>
