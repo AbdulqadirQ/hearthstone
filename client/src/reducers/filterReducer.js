@@ -12,6 +12,7 @@ export const classReducer = (state = {}, action) => {
 export const rarityReducer = (state = {}, action) => {
     switch (action.type) {
         case SELECTED_RARITY:
+            console.log("CHANGED RARITY");
             return { ...state, ...action.payload };
         default:
             return state;

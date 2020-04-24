@@ -1,11 +1,15 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, fetchMetaData, searchTerm, selectedClass, selectedRarity, countCards } from "../../actions";
+import { fetchCards, searchTerm, selectedClass, selectedRarity, countCards } from "../../actions";
 import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
 class CardList extends React.Component {
+    constructor() {
+        super();
+        this.cardCount = 0;
+    }
     buildClassFilterList(classes) {
         if (!_.some(classes)) {
             return [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14];
@@ -32,15 +36,9 @@ class CardList extends React.Component {
 
         return rarity_list;
     }
-
     renderSearchedCards(term) {
-        console.log(this.props.metadata);
-        if (
-            (_.isEmpty(this.props.cards) || !term || term.length < 3) &&
-            !_.some(this.props.classes) &&
-            !_.some(this.props.rarities)
-        ) {
-            this.props.countCards(0);
+        if (this.isZeroCardsToRender()) {
+            this.cardCount = 0;
             return null;
         }
         const class_list = this.buildClassFilterList(this.props.classes);
@@ -55,16 +53,31 @@ class CardList extends React.Component {
         const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
         ));
-        this.props.countCards(card_list.length);
-        return card_list;
+        this.cardCount = card_list.length;
+
+        return (
+            <div>
+                <div>results: {this.cardCount}</div>
+
+                <div className="ui small images">{card_list}</div>
+            </div>
+        );
+        return;
+    }
+
+    isZeroCardsToRender() {
+        return (
+            (_.isEmpty(this.props.cards) || !this.props.term || this.props.term.length < 3) &&
+            !_.some(this.props.classes) &&
+            !_.some(this.props.rarities)
+        );
     }
 
     render() {
-        return (
-            <div>
-                results: {this.props.count}
-                <div className="ui small images">{this.renderSearchedCards(this.props.term)}</div>
-            </div>
+        return this.isZeroCardsToRender() ? (
+            <div>results: 0</div>
+        ) : (
+            <div>{this.renderSearchedCards(this.props.term)}</div>
         );
     }
 }
@@ -72,7 +85,6 @@ class CardList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         cards: state.cards,
-        metadata: state.metadata,
         sets: state.sets,
         term: state.term,
         classes: state.classes,
@@ -83,7 +95,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     fetchCards,
-    fetchMetaData,
     searchTerm,
     selectedClass,
     selectedRarity,
