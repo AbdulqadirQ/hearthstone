@@ -25,7 +25,7 @@ class LoadData extends React.Component {
             standard: standard_sets.includes(set.slug),
         }));
 
-        console.log(setData);
+        console.log("SET DATA", setData);
         this.props.loadCardSets(setData);
     }
 

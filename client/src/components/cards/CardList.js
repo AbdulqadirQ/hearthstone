@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, searchTerm, selectedClass, selectedRarity, countCards } from "../../actions";
+import { fetchCards, searchTerm, selectedClass, selectedRarity } from "../../actions";
 import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
@@ -37,6 +37,7 @@ class CardList extends React.Component {
         return rarity_list;
     }
     renderSearchedCards(term) {
+        console.log(this.props.sets);
         if (this.isZeroCardsToRender()) {
             this.cardCount = 0;
             return null;
@@ -89,7 +90,6 @@ const mapStateToProps = (state) => {
         term: state.term,
         classes: state.classes,
         rarities: state.rarities,
-        count: state.count,
     };
 };
 
@@ -98,5 +98,4 @@ export default connect(mapStateToProps, {
     searchTerm,
     selectedClass,
     selectedRarity,
-    countCards,
 })(CardList);

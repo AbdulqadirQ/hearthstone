@@ -6,7 +6,6 @@ import {
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
-    COUNT_CARDS,
     SELECTED_GAMEMODE,
 } from "./types";
 
@@ -68,12 +67,5 @@ export const selectedGamemode = (gamemode) => {
     return {
         type: SELECTED_GAMEMODE,
         payload: gamemode,
-    };
-};
-
-export const countCards = (count) => {
-    return {
-        type: COUNT_CARDS,
-        payload: count,
     };
 };
