@@ -34,6 +34,7 @@ class CardList extends React.Component {
     }
 
     renderSearchedCards(term) {
+        console.log(this.props.metadata);
         if (
             (_.isEmpty(this.props.cards) || !term || term.length < 3) &&
             !_.some(this.props.classes) &&
@@ -72,6 +73,7 @@ const mapStateToProps = (state) => {
     return {
         cards: state.cards,
         metadata: state.metadata,
+        sets: state.sets,
         term: state.term,
         classes: state.classes,
         rarities: state.rarities,

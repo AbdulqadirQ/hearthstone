@@ -2,6 +2,7 @@ import { endpoint, getAuthToken } from "../api/blizzard";
 import {
     FETCH_CARDS,
     FETCH_METADATA,
+    LOAD_CARD_SETS,
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
@@ -33,6 +34,13 @@ export const fetchMetaData = () => async (dispatch) => {
     });
     console.log("METADATA: ", response.data);
     dispatch({ type: FETCH_METADATA, payload: response.data });
+};
+
+export const loadCardSets = (sets) => {
+    return {
+        type: LOAD_CARD_SETS,
+        payload: sets,
+    };
 };
 
 export const searchTerm = (term) => {
