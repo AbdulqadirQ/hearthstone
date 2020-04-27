@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
-import { rarities } from "./rarityTypes";
 import filterStyling from "./CardFilter.css";
 
 class CardFilter extends React.Component {
@@ -41,17 +40,20 @@ class CardFilter extends React.Component {
     }
 
     renderRarityCheckboxes() {
+        if (_.isEmpty(this.props.rarityData)) {
+            return null;
+        }
         const checkboxes = [];
-        for (const rarity in rarities) {
+        for (const rarity_type of this.props.rarityData) {
             checkboxes.push(
-                <div key={rarities[rarity]} className="row">
+                <div key={rarity_type.id} className="row">
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
-                            name={rarity}
-                            onChange={(e) => this.updateSelectedRarities({ [rarity]: e.target.checked })}
+                            name={rarity_type.name}
+                            onChange={(e) => this.updateSelectedRarities({ [rarity_type.id]: e.target.checked })}
                         />
-                        <label>{rarity}</label>
+                        <label>{rarity_type.name}</label>
                     </div>
                 </div>
             );
@@ -152,6 +154,7 @@ const mapStateToProps = (state) => {
     return {
         sets: state.sets,
         classData: state.classData,
+        rarityData: state.rarityData,
     };
 };
 

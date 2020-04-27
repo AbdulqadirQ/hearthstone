@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { cardsReducer, metadataReducer, cardsetReducer, classTypeReducer } from "./dataReducer";
+import { cardsReducer, metadataReducer, cardsetReducer, classTypeReducer, rarityTypeReducer } from "./dataReducer";
 import searchReducer from "./searchReducer";
 import { classReducer, rarityReducer, gamemodeReducer, setReducer } from "./filterReducer";
 
@@ -8,6 +8,7 @@ export default combineReducers({
     metadata: metadataReducer,
     sets: cardsetReducer,
     classData: classTypeReducer,
+    rarityData: rarityTypeReducer,
     selectedSets: setReducer,
     term: searchReducer,
     classes: classReducer,

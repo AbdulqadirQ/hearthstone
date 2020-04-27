@@ -4,6 +4,7 @@ import {
     FETCH_METADATA,
     LOAD_CARD_SETS,
     LOAD_CLASS_TYPES,
+    LOAD_RARITY_TYPES,
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
@@ -48,6 +49,13 @@ export const loadClassTypes = (classes) => {
     return {
         type: LOAD_CLASS_TYPES,
         payload: classes,
+    };
+};
+
+export const loadRarityTypes = (rarities) => {
+    return {
+        type: LOAD_RARITY_TYPES,
+        payload: rarities,
     };
 };
 

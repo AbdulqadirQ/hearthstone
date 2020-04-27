@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes } from "../../actions";
+import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes } from "../../actions";
 
 class LoadData extends React.Component {
     async componentDidMount() {
@@ -10,6 +10,7 @@ class LoadData extends React.Component {
         await this.props.fetchMetaData();
         this.buildSetObject();
         this.buildClassObject();
+        this.buildRarityObject();
     }
 
     buildSetObject() {
@@ -44,6 +45,19 @@ class LoadData extends React.Component {
         this.props.loadClassTypes(classData);
     }
 
+    buildRarityObject() {
+        if (_.isEmpty(this.props.metadata)) {
+            return null;
+        }
+        const rarityData = this.props.metadata["rarities"].map((rarity_type) => ({
+            id: rarity_type.id,
+            name: rarity_type.name.en_US,
+        }));
+
+        console.log("RARITY DATA", rarityData);
+        this.props.loadRarityTypes(rarityData);
+    }
+
     render() {
         return <div></div>;
     }
@@ -55,4 +69,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchCards, fetchMetaData, loadCardSets, loadClassTypes })(LoadData);
+export default connect(mapStateToProps, { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes })(
+    LoadData
+);
