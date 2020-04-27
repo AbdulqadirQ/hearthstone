@@ -3,6 +3,7 @@ import {
     FETCH_CARDS,
     FETCH_METADATA,
     LOAD_CARD_SETS,
+    LOAD_CLASS_TYPES,
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
@@ -40,6 +41,13 @@ export const loadCardSets = (sets) => {
     return {
         type: LOAD_CARD_SETS,
         payload: sets,
+    };
+};
+
+export const loadClassTypes = (classes) => {
+    return {
+        type: LOAD_CLASS_TYPES,
+        payload: classes,
     };
 };
 

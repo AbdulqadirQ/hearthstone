@@ -2,7 +2,6 @@ import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { fetchCards, searchTerm, selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
-import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
 class CardList extends React.Component {
@@ -12,12 +11,12 @@ class CardList extends React.Component {
     }
     buildClassFilterList(classes) {
         if (!_.some(classes)) {
-            return [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14];
+            return this.props.classData.map((class_type) => class_type.id);
         }
         const classes_list = [];
-        for (const class_name in classes) {
-            if (classes[class_name]) {
-                classes_list.push(class_types[class_name]);
+        for (const class_type in classes) {
+            if (classes[class_type]) {
+                classes_list.push(Number(class_type));
             }
         }
         return classes_list;
@@ -115,6 +114,7 @@ const mapStateToProps = (state) => {
     return {
         cards: state.cards,
         sets: state.sets,
+        classData: state.classData,
         selectedSets: state.selectedSets,
         term: state.term,
         classes: state.classes,

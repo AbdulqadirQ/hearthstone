@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchCards, fetchMetaData, loadCardSets } from "../../actions";
+import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes } from "../../actions";
 
 class LoadData extends React.Component {
     async componentDidMount() {
         this.props.fetchCards();
         await this.props.fetchMetaData();
         this.buildSetObject();
+        this.buildClassObject();
     }
 
     buildSetObject() {
@@ -29,6 +30,20 @@ class LoadData extends React.Component {
         this.props.loadCardSets(setData);
     }
 
+    buildClassObject() {
+        if (_.isEmpty(this.props.metadata)) {
+            return null;
+        }
+
+        const classData = this.props.metadata["classes"].map((class_type) => ({
+            id: class_type.id,
+            name: class_type.name.en_US,
+        }));
+
+        console.log("CLASS DATA", classData);
+        this.props.loadClassTypes(classData);
+    }
+
     render() {
         return <div></div>;
     }
@@ -40,4 +55,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchCards, fetchMetaData, loadCardSets })(LoadData);
+export default connect(mapStateToProps, { fetchCards, fetchMetaData, loadCardSets, loadClassTypes })(LoadData);
