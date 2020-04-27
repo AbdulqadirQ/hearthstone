@@ -1,4 +1,4 @@
-import { SELECTED_CLASS, SELECTED_RARITY, SELECTED_GAMEMODE } from "../actions/types";
+import { SELECTED_CLASS, SELECTED_RARITY, SELECTED_GAMEMODE, SELECTED_SET } from "../actions/types";
 
 export const classReducer = (state = {}, action) => {
     switch (action.type) {
@@ -22,6 +22,15 @@ export const gamemodeReducer = (state = "standard", action) => {
     switch (action.type) {
         case SELECTED_GAMEMODE:
             return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const setReducer = (state = {}, action) => {
+    switch (action.type) {
+        case SELECTED_SET:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

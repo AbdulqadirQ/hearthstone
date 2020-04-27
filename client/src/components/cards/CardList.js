@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, searchTerm, selectedClass, selectedRarity, selectedGamemode } from "../../actions";
+import { fetchCards, searchTerm, selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
 import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
@@ -37,6 +37,19 @@ class CardList extends React.Component {
         return rarity_list;
     }
 
+    buildSetFilterList(sets) {
+        if (!_.some(sets)) {
+            return this.props.sets.map((set) => set.id);
+        }
+        const set_list = [];
+        for (const set in sets) {
+            if (sets[set]) {
+                set_list.push(Number(set));
+            }
+        }
+        return set_list;
+    }
+
     isStandard(selected_standard, card) {
         if (selected_standard) {
             for (const set of this.props.sets) {
@@ -56,12 +69,14 @@ class CardList extends React.Component {
         }
         const class_list = this.buildClassFilterList(this.props.classes);
         const rarity_list = this.buildRarityFilterList(this.props.rarities);
+        const set_list = this.buildSetFilterList(this.props.selectedSets);
         const selected_standard = this.props.gamemode === "standard" ? true : false;
         const filtered_list = this.props.cards.filter(
             (card) =>
                 card.name.en_US.toLowerCase().includes(term.toLowerCase()) &&
                 class_list.includes(card.classId) &&
                 rarity_list.includes(card.rarityId) &&
+                set_list.includes(card.cardSetId) &&
                 this.isStandard(selected_standard, card)
         );
         const card_list = filtered_list.map((card) => (
@@ -76,14 +91,14 @@ class CardList extends React.Component {
                 <div className="ui small images">{card_list}</div>
             </div>
         );
-        return;
     }
 
     isZeroCardsToRender() {
         return (
             (_.isEmpty(this.props.cards) || !this.props.term || this.props.term.length < 3) &&
             !_.some(this.props.classes) &&
-            !_.some(this.props.rarities)
+            !_.some(this.props.rarities) &&
+            !_.some(this.props.selectedSets)
         );
     }
 
@@ -100,6 +115,7 @@ const mapStateToProps = (state) => {
     return {
         cards: state.cards,
         sets: state.sets,
+        selectedSets: state.selectedSets,
         term: state.term,
         classes: state.classes,
         rarities: state.rarities,
@@ -113,4 +129,5 @@ export default connect(mapStateToProps, {
     selectedClass,
     selectedRarity,
     selectedGamemode,
+    selectedSet,
 })(CardList);

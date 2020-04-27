@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectedClass, selectedRarity, selectedGamemode } from "../../actions";
+import _ from "lodash";
+import { selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
 import { classIds } from "./classTypes";
 import { rarities } from "./rarityTypes";
 import filterStyling from "./CardFilter.css";
@@ -12,6 +13,10 @@ class CardFilter extends React.Component {
     }
     updateSelectedRarities(rarityUpdate) {
         this.props.selectedRarity(rarityUpdate);
+    }
+
+    updatedSelectedSets(setUpdate) {
+        this.props.selectedSet(setUpdate);
     }
 
     renderClassCheckboxes() {
@@ -82,6 +87,28 @@ class CardFilter extends React.Component {
         );
     }
 
+    renderSetCheckboxes() {
+        if (_.isEmpty(this.props.sets)) {
+            return null;
+        }
+        const checkboxes = [];
+        for (const set of this.props.sets) {
+            checkboxes.push(
+                <div key={set.id} className="row">
+                    <div className="ui toggle checkbox filterStyling">
+                        <input
+                            type="checkbox"
+                            name={set.name}
+                            onChange={(e) => this.updatedSelectedSets({ [set.id]: e.target.checked })}
+                        />
+                        <label>{set.name}</label>
+                    </div>
+                </div>
+            );
+        }
+        return checkboxes;
+    }
+
     render() {
         return (
             <div className="ui grid container">
@@ -103,6 +130,14 @@ class CardFilter extends React.Component {
                 </div>
                 <div className="four wide column">
                     <div className="ui form">
+                        <div className="inline field">
+                            <h3 className="header">Sets</h3>
+                            {this.renderSetCheckboxes()}
+                        </div>
+                    </div>
+                </div>
+                <div className="four wide column">
+                    <div className="ui form">
                         <div className="inline field">{this.renderGameModeCheckbox()}</div>
                     </div>
                 </div>
@@ -111,4 +146,10 @@ class CardFilter extends React.Component {
     }
 }
 
-export default connect(null, { selectedClass, selectedRarity, selectedGamemode })(CardFilter);
+const mapStateToProps = (state) => {
+    return {
+        sets: state.sets,
+    };
+};
+
+export default connect(mapStateToProps, { selectedClass, selectedRarity, selectedGamemode, selectedSet })(CardFilter);

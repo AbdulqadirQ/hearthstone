@@ -7,6 +7,7 @@ import {
     SELECTED_CLASS,
     SELECTED_RARITY,
     SELECTED_GAMEMODE,
+    SELECTED_SET,
 } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
@@ -67,5 +68,12 @@ export const selectedGamemode = (gamemode) => {
     return {
         type: SELECTED_GAMEMODE,
         payload: gamemode,
+    };
+};
+
+export const selectedSet = (selectedSets) => {
+    return {
+        type: SELECTED_SET,
+        payload: selectedSets,
     };
 };
