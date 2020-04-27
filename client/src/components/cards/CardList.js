@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, searchTerm, selectedClass, selectedRarity } from "../../actions";
+import { fetchCards, searchTerm, selectedClass, selectedRarity, selectedGamemode } from "../../actions";
 import { classIds as class_types } from "./classTypes";
 import { rarities as rarity_types } from "./rarityTypes";
 
@@ -36,21 +36,34 @@ class CardList extends React.Component {
 
         return rarity_list;
     }
+
+    isStandard(selected_standard, card) {
+        if (selected_standard) {
+            for (const set of this.props.sets) {
+                if (set.standard && card.cardSetId === set.id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
     renderSearchedCards(term) {
-        console.log(this.props.sets);
         if (this.isZeroCardsToRender()) {
             this.cardCount = 0;
             return null;
         }
         const class_list = this.buildClassFilterList(this.props.classes);
         const rarity_list = this.buildRarityFilterList(this.props.rarities);
+        const selected_standard = this.props.gamemode === "standard" ? true : false;
         const filtered_list = this.props.cards.filter(
             (card) =>
                 card.name.en_US.toLowerCase().includes(term.toLowerCase()) &&
                 class_list.includes(card.classId) &&
-                rarity_list.includes(card.rarityId)
+                rarity_list.includes(card.rarityId) &&
+                this.isStandard(selected_standard, card)
         );
-
         const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
         ));
@@ -90,6 +103,7 @@ const mapStateToProps = (state) => {
         term: state.term,
         classes: state.classes,
         rarities: state.rarities,
+        gamemode: state.gamemode,
     };
 };
 
@@ -98,4 +112,5 @@ export default connect(mapStateToProps, {
     searchTerm,
     selectedClass,
     selectedRarity,
+    selectedGamemode,
 })(CardList);

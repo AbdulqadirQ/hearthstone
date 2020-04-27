@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectedClass, selectedRarity } from "../../actions";
+import { selectedClass, selectedRarity, selectedGamemode } from "../../actions";
 import { classIds } from "./classTypes";
 import { rarities } from "./rarityTypes";
 import filterStyling from "./CardFilter.css";
@@ -58,6 +58,7 @@ class CardFilter extends React.Component {
         } else {
             this.setState({ gamemode_standard: false });
         }
+        this.props.selectedGamemode(gamemode);
     }
 
     renderGameModeCheckbox() {
@@ -110,4 +111,4 @@ class CardFilter extends React.Component {
     }
 }
 
-export default connect(null, { selectedClass, selectedRarity })(CardFilter);
+export default connect(null, { selectedClass, selectedRarity, selectedGamemode })(CardFilter);
