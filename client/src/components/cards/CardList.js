@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchCards, searchTerm, selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
 
 class CardList extends React.Component {
     constructor() {
@@ -60,6 +59,13 @@ class CardList extends React.Component {
         return true;
     }
 
+    isBetweenValues(property, values) {
+        if (property >= values.min && property <= values.max) {
+            return true;
+        }
+        return false;
+    }
+
     renderSearchedCards(term) {
         if (this.isZeroCardsToRender()) {
             this.cardCount = 0;
@@ -75,7 +81,8 @@ class CardList extends React.Component {
                 class_list.includes(card.classId) &&
                 rarity_list.includes(card.rarityId) &&
                 set_list.includes(card.cardSetId) &&
-                this.isStandard(selected_standard, card)
+                this.isStandard(selected_standard, card) &&
+                this.isBetweenValues(card.manaCost, this.props.mana)
         );
         const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
@@ -120,14 +127,8 @@ const mapStateToProps = (state) => {
         classes: state.classes,
         rarities: state.rarities,
         gamemode: state.gamemode,
+        mana: state.mana,
     };
 };
 
-export default connect(mapStateToProps, {
-    fetchCards,
-    searchTerm,
-    selectedClass,
-    selectedRarity,
-    selectedGamemode,
-    selectedSet,
-})(CardList);
+export default connect(mapStateToProps)(CardList);

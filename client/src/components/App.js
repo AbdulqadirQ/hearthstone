@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import LoadData from "./cards/LoadData";
 import CardList from "./cards/CardList";

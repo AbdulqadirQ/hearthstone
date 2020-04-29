@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { selectedClass, selectedRarity, selectedGamemode, selectedSet } from "../../actions";
+import { selectedClass, selectedRarity, selectedGamemode, selectedSet, selectedMana } from "../../actions";
+import { VerticalSlider } from "../Slider";
 import filterStyling from "./CardFilter.css";
 
 class CardFilter extends React.Component {
@@ -16,6 +17,11 @@ class CardFilter extends React.Component {
     updatedSelectedSets(setUpdate) {
         this.props.selectedSet(setUpdate);
     }
+
+    updatedSelectedMana = (manaUpdate) => {
+        const mana = { max: Math.max(...manaUpdate), min: Math.min(...manaUpdate) };
+        this.props.selectedMana(mana);
+    };
 
     renderClassCheckboxes() {
         if (_.isEmpty(this.props.classData)) {
@@ -131,6 +137,7 @@ class CardFilter extends React.Component {
                             {this.renderRarityCheckboxes()}
                         </div>
                     </div>
+                    <VerticalSlider updateMana={this.updatedSelectedMana} />
                 </div>
                 <div className="four wide column">
                     <div className="ui form">
@@ -158,4 +165,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { selectedClass, selectedRarity, selectedGamemode, selectedSet })(CardFilter);
+export default connect(mapStateToProps, { selectedClass, selectedRarity, selectedGamemode, selectedSet, selectedMana })(
+    CardFilter
+);
