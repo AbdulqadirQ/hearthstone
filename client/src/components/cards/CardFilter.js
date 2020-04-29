@@ -157,13 +157,13 @@ class CardFilter extends React.Component {
                     </div>
                     <div className="ui three column grid">
                         <div className="column">
-                            <VerticalSlider name="Mana" updateValues={this.updateSelectedMana} />
+                            <VerticalSlider name="Mana" updateValues={this.updateSelectedMana} max={25} />
                         </div>
                         <div className="column">
-                            <VerticalSlider name="Health" updateValues={this.updateSelectedHealth} />
+                            <VerticalSlider name="Health" updateValues={this.updateSelectedHealth} max={20} />
                         </div>
                         <div className="column">
-                            <VerticalSlider name="Attack" updateValues={this.updateSelectedAttack} />
+                            <VerticalSlider name="Attack" updateValues={this.updateSelectedAttack} max={20} />
                         </div>
                     </div>
                 </div>

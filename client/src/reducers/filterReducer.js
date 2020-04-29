@@ -44,7 +44,7 @@ export const setReducer = (state = {}, action) => {
     }
 };
 
-export const manaReducer = (state = { min: 0, max: 20 }, action) => {
+export const manaReducer = (state = { min: 0, max: 25 }, action) => {
     switch (action.type) {
         case SELECTED_MANA:
             return action.payload;

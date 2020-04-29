@@ -9,28 +9,16 @@ const useStyles = makeStyles({
     },
 });
 
-const marks = [
-    {
-        value: 0,
-        label: "0",
-    },
-    {
-        value: 5,
-        label: "5",
-    },
-    {
-        value: 10,
-        label: "10",
-    },
-    {
-        value: 15,
-        label: "15",
-    },
-    {
-        value: 20,
-        label: "20",
-    },
-];
+const createMarks = (maxValue) => {
+    var largest_mark = 0;
+    const marks = [];
+    while (maxValue >= largest_mark) {
+        marks.push({ value: [largest_mark], label: [largest_mark].toString() });
+        largest_mark = largest_mark + 5;
+    }
+
+    return marks;
+};
 
 export const VerticalSlider = (props) => {
     const classes = useStyles();
@@ -44,10 +32,10 @@ export const VerticalSlider = (props) => {
                     orientation="vertical"
                     min={0}
                     step={1}
-                    max={20}
-                    defaultValue={[0, 20]}
+                    max={props.max}
+                    defaultValue={[0, props.max]}
                     aria-labelledby="vertical-slider"
-                    marks={marks}
+                    marks={createMarks(props.max)}
                     valueLabelDisplay="auto"
                     onChangeCommitted={(event, newValue) => props.updateValues(newValue)}
                 />
