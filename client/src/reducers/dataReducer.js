@@ -1,4 +1,11 @@
-import { FETCH_CARDS, FETCH_METADATA, LOAD_CARD_SETS, LOAD_CLASS_TYPES, LOAD_RARITY_TYPES } from "../actions/types";
+import {
+    FETCH_CARDS,
+    FETCH_METADATA,
+    LOAD_CARD_SETS,
+    LOAD_CLASS_TYPES,
+    LOAD_RARITY_TYPES,
+    LOAD_CARD_TYPES,
+} from "../actions/types";
 
 export const cardsReducer = (state = {}, action) => {
     switch (action.type) {
@@ -39,6 +46,15 @@ export const classTypeReducer = (state = {}, action) => {
 export const rarityTypeReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_RARITY_TYPES:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const cardTypeReducer = (state = {}, action) => {
+    switch (action.type) {
+        case LOAD_CARD_TYPES:
             return action.payload;
         default:
             return state;

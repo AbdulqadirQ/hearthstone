@@ -6,6 +6,7 @@ import {
     SELECTED_MANA,
     SELECTED_HEALTH,
     SELECTED_ATTACK,
+    SELECTED_CARD_TYPE,
 } from "../actions/types";
 
 export const classReducer = (state = {}, action) => {
@@ -66,6 +67,15 @@ export const attackReducer = (state = { min: 0, max: 20 }, action) => {
     switch (action.type) {
         case SELECTED_ATTACK:
             return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const selectedCardTypeReducer = (state = {}, action) => {
+    switch (action.type) {
+        case SELECTED_CARD_TYPE:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

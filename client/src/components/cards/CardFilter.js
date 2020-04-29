@@ -9,6 +9,7 @@ import {
     selectedMana,
     selectedHealth,
     selectedAttack,
+    selectedCardType,
 } from "../../actions";
 import { VerticalSlider } from "../Slider";
 import filterStyling from "./CardFilter.css";
@@ -24,6 +25,10 @@ class CardFilter extends React.Component {
 
     updatedSelectedSets(setUpdate) {
         this.props.selectedSet(setUpdate);
+    }
+
+    updatedSelectedCardTypes(cardTypeUpdate) {
+        this.props.selectedCardType(cardTypeUpdate);
     }
 
     updateSelectedMana = (manaUpdate) => {
@@ -137,6 +142,28 @@ class CardFilter extends React.Component {
         return checkboxes;
     }
 
+    renderCardTypeCheckboxes() {
+        if (_.isEmpty(this.props.cardTypeData)) {
+            return null;
+        }
+        const checkboxes = [];
+        for (const cardType of this.props.cardTypeData) {
+            checkboxes.push(
+                <div key={cardType.id} className="row">
+                    <div className="ui toggle checkbox filterStyling">
+                        <input
+                            type="checkbox"
+                            name={cardType.name}
+                            onChange={(e) => this.updatedSelectedCardTypes({ [cardType.id]: e.target.checked })}
+                        />
+                        <label>{cardType.name}</label>
+                    </div>
+                </div>
+            );
+        }
+        return checkboxes;
+    }
+
     render() {
         return (
             <div className="ui grid container">
@@ -145,6 +172,10 @@ class CardFilter extends React.Component {
                         <div className="inline field">
                             <h3 className="header">Class</h3>
                             {this.renderClassCheckboxes()}
+                        </div>
+                        <div className="inline field">
+                            <h3 className="header">Type</h3>
+                            {this.renderCardTypeCheckboxes()}
                         </div>
                     </div>
                 </div>
@@ -190,6 +221,7 @@ const mapStateToProps = (state) => {
         sets: state.sets,
         classData: state.classData,
         rarityData: state.rarityData,
+        cardTypeData: state.cardTypeData,
     };
 };
 
@@ -201,4 +233,5 @@ export default connect(mapStateToProps, {
     selectedMana,
     selectedHealth,
     selectedAttack,
+    selectedCardType,
 })(CardFilter);

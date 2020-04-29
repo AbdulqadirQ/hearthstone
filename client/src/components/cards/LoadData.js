@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes } from "../../actions";
+import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes, loadCardTypes } from "../../actions";
 
 class LoadData extends React.Component {
     async componentDidMount() {
@@ -11,6 +11,7 @@ class LoadData extends React.Component {
         this.buildSetObject();
         this.buildClassObject();
         this.buildRarityObject();
+        this.buildCardTypesObject();
     }
 
     buildSetObject() {
@@ -58,6 +59,19 @@ class LoadData extends React.Component {
         this.props.loadRarityTypes(rarityData);
     }
 
+    buildCardTypesObject() {
+        if (_.isEmpty(this.props.metadata)) {
+            return null;
+        }
+        const typesData = this.props.metadata["types"].map((card_type) => ({
+            id: card_type.id,
+            name: card_type.name.en_US,
+        }));
+
+        console.log("TYPES DATA", typesData);
+        this.props.loadCardTypes(typesData);
+    }
+
     render() {
         return <div></div>;
     }
@@ -69,6 +83,11 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes })(
-    LoadData
-);
+export default connect(mapStateToProps, {
+    fetchCards,
+    fetchMetaData,
+    loadCardSets,
+    loadClassTypes,
+    loadRarityTypes,
+    loadCardTypes,
+})(LoadData);

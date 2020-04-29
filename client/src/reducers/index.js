@@ -1,5 +1,12 @@
 import { combineReducers } from "redux";
-import { cardsReducer, metadataReducer, cardsetReducer, classTypeReducer, rarityTypeReducer } from "./dataReducer";
+import {
+    cardsReducer,
+    metadataReducer,
+    cardsetReducer,
+    classTypeReducer,
+    rarityTypeReducer,
+    cardTypeReducer,
+} from "./dataReducer";
 import searchReducer from "./searchReducer";
 import {
     classReducer,
@@ -9,6 +16,7 @@ import {
     manaReducer,
     healthReducer,
     attackReducer,
+    selectedCardTypeReducer,
 } from "./filterReducer";
 
 export default combineReducers({
@@ -17,6 +25,7 @@ export default combineReducers({
     sets: cardsetReducer,
     classData: classTypeReducer,
     rarityData: rarityTypeReducer,
+    cardTypeData: cardTypeReducer,
     selectedSets: setReducer,
     term: searchReducer,
     classes: classReducer,
@@ -25,4 +34,5 @@ export default combineReducers({
     mana: manaReducer,
     health: healthReducer,
     attack: attackReducer,
+    cardType: selectedCardTypeReducer,
 });

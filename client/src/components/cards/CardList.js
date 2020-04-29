@@ -47,6 +47,19 @@ class CardList extends React.Component {
         return set_list;
     }
 
+    buildCardTypeList(cardTypes) {
+        if (!_.some(cardTypes)) {
+            return this.props.cardTypeData.map((cardType) => cardType.id);
+        }
+        const cardType_list = [];
+        for (const cardType in cardTypes) {
+            if (cardTypes[cardType]) {
+                cardType_list.push(Number(cardType));
+            }
+        }
+        return cardType_list;
+    }
+
     isStandard(selected_standard, card) {
         if (selected_standard) {
             for (const set of this.props.sets) {
@@ -74,6 +87,7 @@ class CardList extends React.Component {
         const class_list = this.buildClassFilterList(this.props.classes);
         const rarity_list = this.buildRarityFilterList(this.props.rarities);
         const set_list = this.buildSetFilterList(this.props.selectedSets);
+        const cardType_list = this.buildCardTypeList(this.props.cardType);
         const selected_standard = this.props.gamemode === "standard" ? true : false;
         const filtered_list = this.props.cards.filter(
             (card) =>
@@ -81,6 +95,7 @@ class CardList extends React.Component {
                 class_list.includes(card.classId) &&
                 rarity_list.includes(card.rarityId) &&
                 set_list.includes(card.cardSetId) &&
+                cardType_list.includes(card.cardTypeId) &&
                 this.isStandard(selected_standard, card) &&
                 ("manaCost" in card ? this.isBetweenValues(card.manaCost, this.props.mana) : true) &&
                 ("health" in card ? this.isBetweenValues(card.health, this.props.health) : true) &&
@@ -106,7 +121,8 @@ class CardList extends React.Component {
             (_.isEmpty(this.props.cards) || !this.props.term || this.props.term.length < 3) &&
             !_.some(this.props.classes) &&
             !_.some(this.props.rarities) &&
-            !_.some(this.props.selectedSets)
+            !_.some(this.props.selectedSets) &&
+            !_.some(this.props.cardTypes)
         );
     }
 
@@ -125,6 +141,7 @@ const mapStateToProps = (state) => {
         sets: state.sets,
         classData: state.classData,
         rarityData: state.rarityData,
+        cardTypeData: state.cardTypeData,
         selectedSets: state.selectedSets,
         term: state.term,
         classes: state.classes,
@@ -133,6 +150,7 @@ const mapStateToProps = (state) => {
         mana: state.mana,
         health: state.health,
         attack: state.attack,
+        cardType: state.cardType,
     };
 };
 

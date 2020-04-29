@@ -5,6 +5,7 @@ import {
     LOAD_CARD_SETS,
     LOAD_CLASS_TYPES,
     LOAD_RARITY_TYPES,
+    LOAD_CARD_TYPES,
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
@@ -13,6 +14,7 @@ import {
     SELECTED_MANA,
     SELECTED_HEALTH,
     SELECTED_ATTACK,
+    SELECTED_CARD_TYPE,
 } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
@@ -59,6 +61,13 @@ export const loadRarityTypes = (rarities) => {
     return {
         type: LOAD_RARITY_TYPES,
         payload: rarities,
+    };
+};
+
+export const loadCardTypes = (card_types) => {
+    return {
+        type: LOAD_CARD_TYPES,
+        payload: card_types,
     };
 };
 
@@ -115,5 +124,12 @@ export const selectedAttack = (attack) => {
     return {
         type: SELECTED_ATTACK,
         payload: attack,
+    };
+};
+
+export const selectedCardType = (cardType) => {
+    return {
+        type: SELECTED_CARD_TYPE,
+        payload: cardType,
     };
 };
