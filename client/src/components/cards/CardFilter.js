@@ -1,7 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { selectedClass, selectedRarity, selectedGamemode, selectedSet, selectedMana } from "../../actions";
+import {
+    selectedClass,
+    selectedRarity,
+    selectedGamemode,
+    selectedSet,
+    selectedMana,
+    selectedHealth,
+    selectedAttack,
+} from "../../actions";
 import { VerticalSlider } from "../Slider";
 import filterStyling from "./CardFilter.css";
 
@@ -18,9 +26,19 @@ class CardFilter extends React.Component {
         this.props.selectedSet(setUpdate);
     }
 
-    updatedSelectedMana = (manaUpdate) => {
+    updateSelectedMana = (manaUpdate) => {
         const mana = { max: Math.max(...manaUpdate), min: Math.min(...manaUpdate) };
         this.props.selectedMana(mana);
+    };
+
+    updateSelectedHealth = (healthUpdate) => {
+        const health = { max: Math.max(...healthUpdate), min: Math.min(...healthUpdate) };
+        this.props.selectedHealth(health);
+    };
+
+    updateSelectedAttack = (attackUpdate) => {
+        const attack = { max: Math.max(...attackUpdate), min: Math.min(...attackUpdate) };
+        this.props.selectedAttack(attack);
     };
 
     renderClassCheckboxes() {
@@ -137,7 +155,17 @@ class CardFilter extends React.Component {
                             {this.renderRarityCheckboxes()}
                         </div>
                     </div>
-                    <VerticalSlider updateMana={this.updatedSelectedMana} />
+                    <div className="ui three column grid">
+                        <div className="column">
+                            <VerticalSlider name="Mana" updateValues={this.updateSelectedMana} />
+                        </div>
+                        <div className="column">
+                            <VerticalSlider name="Health" updateValues={this.updateSelectedHealth} />
+                        </div>
+                        <div className="column">
+                            <VerticalSlider name="Attack" updateValues={this.updateSelectedAttack} />
+                        </div>
+                    </div>
                 </div>
                 <div className="four wide column">
                     <div className="ui form">
@@ -165,6 +193,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { selectedClass, selectedRarity, selectedGamemode, selectedSet, selectedMana })(
-    CardFilter
-);
+export default connect(mapStateToProps, {
+    selectedClass,
+    selectedRarity,
+    selectedGamemode,
+    selectedSet,
+    selectedMana,
+    selectedHealth,
+    selectedAttack,
+})(CardFilter);

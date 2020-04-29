@@ -11,6 +11,8 @@ import {
     SELECTED_GAMEMODE,
     SELECTED_SET,
     SELECTED_MANA,
+    SELECTED_HEALTH,
+    SELECTED_ATTACK,
 } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
@@ -99,5 +101,19 @@ export const selectedMana = (mana) => {
     return {
         type: SELECTED_MANA,
         payload: mana,
+    };
+};
+
+export const selectedHealth = (health) => {
+    return {
+        type: SELECTED_HEALTH,
+        payload: health,
+    };
+};
+
+export const selectedAttack = (attack) => {
+    return {
+        type: SELECTED_ATTACK,
+        payload: attack,
     };
 };

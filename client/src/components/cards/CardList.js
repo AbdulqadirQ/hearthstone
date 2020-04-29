@@ -82,7 +82,10 @@ class CardList extends React.Component {
                 rarity_list.includes(card.rarityId) &&
                 set_list.includes(card.cardSetId) &&
                 this.isStandard(selected_standard, card) &&
-                this.isBetweenValues(card.manaCost, this.props.mana)
+                ("manaCost" in card ? this.isBetweenValues(card.manaCost, this.props.mana) : true) &&
+                ("health" in card ? this.isBetweenValues(card.health, this.props.health) : true) &&
+                ("durability" in card ? this.isBetweenValues(card.durability, this.props.health) : true) &&
+                ("attack" in card ? this.isBetweenValues(card.attack, this.props.attack) : true)
         );
         const card_list = filtered_list.map((card) => (
             <img key={card.id} alt={card.name.en_US} src={card.image.en_US}></img>
@@ -128,6 +131,8 @@ const mapStateToProps = (state) => {
         rarities: state.rarities,
         gamemode: state.gamemode,
         mana: state.mana,
+        health: state.health,
+        attack: state.attack,
     };
 };
 

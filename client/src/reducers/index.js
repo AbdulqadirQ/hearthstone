@@ -1,7 +1,15 @@
 import { combineReducers } from "redux";
 import { cardsReducer, metadataReducer, cardsetReducer, classTypeReducer, rarityTypeReducer } from "./dataReducer";
 import searchReducer from "./searchReducer";
-import { classReducer, rarityReducer, gamemodeReducer, setReducer, manaReducer } from "./filterReducer";
+import {
+    classReducer,
+    rarityReducer,
+    gamemodeReducer,
+    setReducer,
+    manaReducer,
+    healthReducer,
+    attackReducer,
+} from "./filterReducer";
 
 export default combineReducers({
     cards: cardsReducer,
@@ -15,4 +23,6 @@ export default combineReducers({
     rarities: rarityReducer,
     gamemode: gamemodeReducer,
     mana: manaReducer,
+    health: healthReducer,
+    attack: attackReducer,
 });

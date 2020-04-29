@@ -1,4 +1,12 @@
-import { SELECTED_CLASS, SELECTED_RARITY, SELECTED_GAMEMODE, SELECTED_SET, SELECTED_MANA } from "../actions/types";
+import {
+    SELECTED_CLASS,
+    SELECTED_RARITY,
+    SELECTED_GAMEMODE,
+    SELECTED_SET,
+    SELECTED_MANA,
+    SELECTED_HEALTH,
+    SELECTED_ATTACK,
+} from "../actions/types";
 
 export const classReducer = (state = {}, action) => {
     switch (action.type) {
@@ -39,6 +47,24 @@ export const setReducer = (state = {}, action) => {
 export const manaReducer = (state = { min: 0, max: 20 }, action) => {
     switch (action.type) {
         case SELECTED_MANA:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const healthReducer = (state = { min: 0, max: 20 }, action) => {
+    switch (action.type) {
+        case SELECTED_HEALTH:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const attackReducer = (state = { min: 0, max: 20 }, action) => {
+    switch (action.type) {
+        case SELECTED_ATTACK:
             return action.payload;
         default:
             return state;

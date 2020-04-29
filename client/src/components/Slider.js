@@ -37,7 +37,7 @@ export const VerticalSlider = (props) => {
     return (
         <React.Fragment>
             <Typography id="vertical-slider" gutterBottom>
-                Mana
+                {props.name}
             </Typography>
             <div className={classes.root}>
                 <Slider
@@ -49,7 +49,7 @@ export const VerticalSlider = (props) => {
                     aria-labelledby="vertical-slider"
                     marks={marks}
                     valueLabelDisplay="auto"
-                    onChangeCommitted={(event, newValue) => props.updateMana(newValue)}
+                    onChangeCommitted={(event, newValue) => props.updateValues(newValue)}
                 />
             </div>
         </React.Fragment>
