@@ -122,7 +122,7 @@ class CardList extends React.Component {
             !_.some(this.props.classes) &&
             !_.some(this.props.rarities) &&
             !_.some(this.props.selectedSets) &&
-            !_.some(this.props.cardTypes)
+            !_.some(this.props.cardType)
         );
     }
 
