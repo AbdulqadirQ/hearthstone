@@ -110,7 +110,7 @@ class CardList extends React.Component {
                 rarity_list.includes(card.rarityId) &&
                 set_list.includes(card.cardSetId) &&
                 cardType_list.includes(card.cardTypeId) &&
-                minion_list.includes(card.minionTypeId) &&
+                (_.some(this.props.selectedMinion) ? minion_list.includes(card.minionTypeId) : true) &&
                 this.isStandard(selected_standard, card) &&
                 ("manaCost" in card ? this.isBetweenValues(card.manaCost, this.props.mana) : true) &&
                 ("health" in card ? this.isBetweenValues(card.health, this.props.health) : true) &&
