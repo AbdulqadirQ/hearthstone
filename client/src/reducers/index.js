@@ -6,6 +6,7 @@ import {
     classTypeReducer,
     rarityTypeReducer,
     cardTypeReducer,
+    minionTypeReducer,
 } from "./dataReducer";
 import searchReducer from "./searchReducer";
 import {
@@ -17,6 +18,7 @@ import {
     healthReducer,
     attackReducer,
     selectedCardTypeReducer,
+    selectedMinionReducer,
 } from "./filterReducer";
 
 export default combineReducers({
@@ -26,6 +28,7 @@ export default combineReducers({
     classData: classTypeReducer,
     rarityData: rarityTypeReducer,
     cardTypeData: cardTypeReducer,
+    minionData: minionTypeReducer,
     selectedSets: setReducer,
     term: searchReducer,
     classes: classReducer,
@@ -35,4 +38,5 @@ export default combineReducers({
     health: healthReducer,
     attack: attackReducer,
     cardType: selectedCardTypeReducer,
+    selectedMinion: selectedMinionReducer,
 });

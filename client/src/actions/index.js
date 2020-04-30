@@ -6,6 +6,7 @@ import {
     LOAD_CLASS_TYPES,
     LOAD_RARITY_TYPES,
     LOAD_CARD_TYPES,
+    LOAD_MINION_TYPES,
     SEARCH_TERM,
     SELECTED_CLASS,
     SELECTED_RARITY,
@@ -15,6 +16,7 @@ import {
     SELECTED_HEALTH,
     SELECTED_ATTACK,
     SELECTED_CARD_TYPE,
+    SELECTED_MINION,
 } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
@@ -68,6 +70,13 @@ export const loadCardTypes = (card_types) => {
     return {
         type: LOAD_CARD_TYPES,
         payload: card_types,
+    };
+};
+
+export const loadMinionTypes = (minion_types) => {
+    return {
+        type: LOAD_MINION_TYPES,
+        payload: minion_types,
     };
 };
 
@@ -131,5 +140,12 @@ export const selectedCardType = (cardType) => {
     return {
         type: SELECTED_CARD_TYPE,
         payload: cardType,
+    };
+};
+
+export const selectedMinion = (minion) => {
+    return {
+        type: SELECTED_MINION,
+        payload: minion,
     };
 };

@@ -10,6 +10,7 @@ import {
     selectedHealth,
     selectedAttack,
     selectedCardType,
+    selectedMinion,
 } from "../../actions";
 import { VerticalSlider } from "../Slider";
 import filterStyling from "./CardFilter.css";
@@ -44,6 +45,10 @@ class CardFilter extends React.Component {
     updateSelectedAttack = (attackUpdate) => {
         const attack = { max: Math.max(...attackUpdate), min: Math.min(...attackUpdate) };
         this.props.selectedAttack(attack);
+    };
+
+    updatedSelectedminionTypes = (minionUpdate) => {
+        this.props.selectedMinion(minionUpdate);
     };
 
     renderClassCheckboxes() {
@@ -164,6 +169,28 @@ class CardFilter extends React.Component {
         return checkboxes;
     }
 
+    renderMinionTypeCheckboxes() {
+        if (_.isEmpty(this.props.minionData)) {
+            return null;
+        }
+        const checkboxes = [];
+        for (const minion of this.props.minionData) {
+            checkboxes.push(
+                <div key={minion.id} className="row">
+                    <div className="ui toggle checkbox filterStyling">
+                        <input
+                            type="checkbox"
+                            name={minion.name}
+                            onChange={(e) => this.updatedSelectedminionTypes({ [minion.id]: e.target.checked })}
+                        />
+                        <label>{minion.name}</label>
+                    </div>
+                </div>
+            );
+        }
+        return checkboxes;
+    }
+
     render() {
         return (
             <div className="ui grid container">
@@ -210,6 +237,12 @@ class CardFilter extends React.Component {
                     <div className="ui form">
                         <div className="inline field">{this.renderGameModeCheckbox()}</div>
                     </div>
+                    <div className="ui form">
+                        <div className="inline field">
+                            <h3 className="header header-minion">Minion Type</h3>
+                            {this.renderMinionTypeCheckboxes()}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -222,6 +255,7 @@ const mapStateToProps = (state) => {
         classData: state.classData,
         rarityData: state.rarityData,
         cardTypeData: state.cardTypeData,
+        minionData: state.minionData,
     };
 };
 
@@ -234,4 +268,5 @@ export default connect(mapStateToProps, {
     selectedHealth,
     selectedAttack,
     selectedCardType,
+    selectedMinion,
 })(CardFilter);

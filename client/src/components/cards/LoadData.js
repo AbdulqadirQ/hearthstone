@@ -2,7 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchCards, fetchMetaData, loadCardSets, loadClassTypes, loadRarityTypes, loadCardTypes } from "../../actions";
+import {
+    fetchCards,
+    fetchMetaData,
+    loadCardSets,
+    loadClassTypes,
+    loadRarityTypes,
+    loadCardTypes,
+    loadMinionTypes,
+} from "../../actions";
 
 class LoadData extends React.Component {
     async componentDidMount() {
@@ -12,6 +20,7 @@ class LoadData extends React.Component {
         this.buildClassObject();
         this.buildRarityObject();
         this.buildCardTypesObject();
+        this.buildMinionTypeObject();
     }
 
     buildSetObject() {
@@ -72,6 +81,19 @@ class LoadData extends React.Component {
         this.props.loadCardTypes(typesData);
     }
 
+    buildMinionTypeObject() {
+        if (_.isEmpty(this.props.metadata)) {
+            return null;
+        }
+        const minionData = this.props.metadata["minionTypes"].map((minion_type) => ({
+            id: minion_type.id,
+            name: minion_type.name.en_US,
+        }));
+
+        console.log("MINION DATA", minionData);
+        this.props.loadMinionTypes(minionData);
+    }
+
     render() {
         return <div></div>;
     }
@@ -90,4 +112,5 @@ export default connect(mapStateToProps, {
     loadClassTypes,
     loadRarityTypes,
     loadCardTypes,
+    loadMinionTypes,
 })(LoadData);

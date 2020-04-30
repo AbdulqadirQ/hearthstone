@@ -60,6 +60,19 @@ class CardList extends React.Component {
         return cardType_list;
     }
 
+    buildMinionList(minions) {
+        if (!_.some(minions)) {
+            return this.props.minionData.map((minion) => minion.id);
+        }
+        const minion_list = [];
+        for (const minion in minions) {
+            if (minions[minion]) {
+                minion_list.push(Number(minion));
+            }
+        }
+        return minion_list;
+    }
+
     isStandard(selected_standard, card) {
         if (selected_standard) {
             for (const set of this.props.sets) {
@@ -88,6 +101,7 @@ class CardList extends React.Component {
         const rarity_list = this.buildRarityFilterList(this.props.rarities);
         const set_list = this.buildSetFilterList(this.props.selectedSets);
         const cardType_list = this.buildCardTypeList(this.props.cardType);
+        const minion_list = this.buildMinionList(this.props.selectedMinion);
         const selected_standard = this.props.gamemode === "standard" ? true : false;
         const filtered_list = this.props.cards.filter(
             (card) =>
@@ -96,6 +110,7 @@ class CardList extends React.Component {
                 rarity_list.includes(card.rarityId) &&
                 set_list.includes(card.cardSetId) &&
                 cardType_list.includes(card.cardTypeId) &&
+                minion_list.includes(card.minionTypeId) &&
                 this.isStandard(selected_standard, card) &&
                 ("manaCost" in card ? this.isBetweenValues(card.manaCost, this.props.mana) : true) &&
                 ("health" in card ? this.isBetweenValues(card.health, this.props.health) : true) &&
@@ -122,7 +137,8 @@ class CardList extends React.Component {
             !_.some(this.props.classes) &&
             !_.some(this.props.rarities) &&
             !_.some(this.props.selectedSets) &&
-            !_.some(this.props.cardType)
+            !_.some(this.props.cardType) &&
+            !_.some(this.props.selectedMinion)
         );
     }
 
@@ -142,6 +158,7 @@ const mapStateToProps = (state) => {
         classData: state.classData,
         rarityData: state.rarityData,
         cardTypeData: state.cardTypeData,
+        minionData: state.minionData,
         selectedSets: state.selectedSets,
         term: state.term,
         classes: state.classes,
@@ -151,6 +168,7 @@ const mapStateToProps = (state) => {
         health: state.health,
         attack: state.attack,
         cardType: state.cardType,
+        selectedMinion: state.selectedMinion,
     };
 };
 

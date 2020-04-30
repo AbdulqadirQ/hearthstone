@@ -5,6 +5,7 @@ import {
     LOAD_CLASS_TYPES,
     LOAD_RARITY_TYPES,
     LOAD_CARD_TYPES,
+    LOAD_MINION_TYPES,
 } from "../actions/types";
 
 export const cardsReducer = (state = {}, action) => {
@@ -55,6 +56,15 @@ export const rarityTypeReducer = (state = {}, action) => {
 export const cardTypeReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_CARD_TYPES:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const minionTypeReducer = (state = {}, action) => {
+    switch (action.type) {
+        case LOAD_MINION_TYPES:
             return action.payload;
         default:
             return state;
