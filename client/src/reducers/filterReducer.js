@@ -8,6 +8,7 @@ import {
     SELECTED_ATTACK,
     SELECTED_CARD_TYPE,
     SELECTED_MINION,
+    TOGGLE_FILTER,
 } from "../actions/types";
 
 export const classReducer = (state = {}, action) => {
@@ -86,6 +87,15 @@ export const selectedMinionReducer = (state = {}, action) => {
     switch (action.type) {
         case SELECTED_MINION:
             return { ...state, ...action.payload };
+        default:
+            return state;
+    }
+};
+
+export const toggleFilterReducer = (state = false, action) => {
+    switch (action.type) {
+        case TOGGLE_FILTER:
+            return action.payload;
         default:
             return state;
     }

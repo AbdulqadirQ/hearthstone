@@ -19,6 +19,7 @@ import {
     attackReducer,
     selectedCardTypeReducer,
     selectedMinionReducer,
+    toggleFilterReducer,
 } from "./filterReducer";
 
 export default combineReducers({
@@ -39,4 +40,5 @@ export default combineReducers({
     attack: attackReducer,
     cardType: selectedCardTypeReducer,
     selectedMinion: selectedMinionReducer,
+    toggleFilter: toggleFilterReducer,
 });

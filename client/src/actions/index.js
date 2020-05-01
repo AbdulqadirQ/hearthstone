@@ -17,6 +17,7 @@ import {
     SELECTED_ATTACK,
     SELECTED_CARD_TYPE,
     SELECTED_MINION,
+    TOGGLE_FILTER,
 } from "./types";
 
 export const fetchCards = () => async (dispatch) => {
@@ -147,5 +148,12 @@ export const selectedMinion = (minion) => {
     return {
         type: SELECTED_MINION,
         payload: minion,
+    };
+};
+
+export const toggleFilter = (filter) => {
+    return {
+        type: TOGGLE_FILTER,
+        payload: filter,
     };
 };
