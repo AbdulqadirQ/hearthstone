@@ -62,6 +62,7 @@ class CardFilter extends React.Component {
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
+                            checked={class_type.id in this.props.classes ? this.props.classes[class_type.id] : false}
                             name={class_type.name}
                             onChange={(e) => this.updateSelectedClasses({ [class_type.id]: e.target.checked })}
                         />
@@ -84,6 +85,9 @@ class CardFilter extends React.Component {
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
+                            checked={
+                                rarity_type.id in this.props.rarities ? this.props.rarities[rarity_type.id] : false
+                            }
                             name={rarity_type.name}
                             onChange={(e) => this.updateSelectedRarities({ [rarity_type.id]: e.target.checked })}
                         />
@@ -95,28 +99,19 @@ class CardFilter extends React.Component {
         return checkboxes;
     }
 
-    onGamemodeChange(gamemode) {
-        if (gamemode === "standard") {
-            this.setState({ gamemode_standard: true });
-        } else {
-            this.setState({ gamemode_standard: false });
-        }
-        this.props.selectedGamemode(gamemode);
-    }
-
     renderGameModeCheckbox() {
         return (
             <div className="row">
                 <div className="ui buttons">
                     <button
-                        className={this.state.gamemode_standard ? "ui button positive" : "ui button"}
-                        onClick={() => this.onGamemodeChange("standard")}
+                        className={this.props.gamemode === "standard" ? "ui button positive" : "ui button"}
+                        onClick={() => this.props.selectedGamemode("standard")}
                     >
                         Standard
                     </button>
                     <button
-                        className={this.state.gamemode_standard ? "ui button" : "ui button positive"}
-                        onClick={() => this.onGamemodeChange("wild")}
+                        className={this.props.gamemode === "wild" ? "ui button positive" : "ui button"}
+                        onClick={() => this.props.selectedGamemode("wild")}
                     >
                         Wild
                     </button>
@@ -136,6 +131,7 @@ class CardFilter extends React.Component {
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
+                            checked={set.id in this.props.selectedSets ? this.props.selectedSets[set.id] : false}
                             name={set.name}
                             onChange={(e) => this.updatedSelectedSets({ [set.id]: e.target.checked })}
                         />
@@ -158,6 +154,7 @@ class CardFilter extends React.Component {
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
+                            checked={cardType.id in this.props.cardType ? this.props.cardType[cardType.id] : false}
                             name={cardType.name}
                             onChange={(e) => this.updatedSelectedCardTypes({ [cardType.id]: e.target.checked })}
                         />
@@ -180,6 +177,11 @@ class CardFilter extends React.Component {
                     <div className="ui toggle checkbox filterStyling">
                         <input
                             type="checkbox"
+                            checked={
+                                minion.id in this.props.selectedMinionState
+                                    ? this.props.selectedMinionState[minion.id]
+                                    : false
+                            }
                             name={minion.name}
                             onChange={(e) => this.updatedSelectedminionTypes({ [minion.id]: e.target.checked })}
                         />
@@ -215,13 +217,31 @@ class CardFilter extends React.Component {
                     </div>
                     <div className="ui three column grid">
                         <div className="column">
-                            <VerticalSlider name="Mana" updateValues={this.updateSelectedMana} max={25} />
+                            <VerticalSlider
+                                name="Mana"
+                                updateValues={this.updateSelectedMana}
+                                max={25}
+                                selectedMax={"max" in this.props.mana ? this.props.mana.max : 25}
+                                selectedMin={this.props.mana.min}
+                            />
                         </div>
                         <div className="column">
-                            <VerticalSlider name="Health" updateValues={this.updateSelectedHealth} max={20} />
+                            <VerticalSlider
+                                name="Health"
+                                updateValues={this.updateSelectedHealth}
+                                max={20}
+                                selectedMax={this.props.health.max}
+                                selectedMin={this.props.health.min}
+                            />
                         </div>
                         <div className="column">
-                            <VerticalSlider name="Attack" updateValues={this.updateSelectedAttack} max={20} />
+                            <VerticalSlider
+                                name="Attack"
+                                updateValues={this.updateSelectedAttack}
+                                max={20}
+                                selectedMax={this.props.attack.max}
+                                selectedMin={this.props.attack.min}
+                            />
                         </div>
                     </div>
                 </div>
@@ -256,6 +276,16 @@ const mapStateToProps = (state) => {
         rarityData: state.rarityData,
         cardTypeData: state.cardTypeData,
         minionData: state.minionData,
+
+        selectedSets: state.selectedSets,
+        classes: state.classes,
+        rarities: state.rarities,
+        gamemode: state.gamemode,
+        mana: state.mana,
+        health: state.health,
+        attack: state.attack,
+        cardType: state.cardType,
+        selectedMinionState: state.selectedMinion,
     };
 };
 

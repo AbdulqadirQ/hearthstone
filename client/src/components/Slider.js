@@ -33,7 +33,7 @@ export const VerticalSlider = (props) => {
                     min={0}
                     step={1}
                     max={props.max}
-                    defaultValue={[0, props.max]}
+                    defaultValue={[props.selectedMax, props.selectedMin]}
                     aria-labelledby="vertical-slider"
                     marks={createMarks(props.max)}
                     valueLabelDisplay="auto"
